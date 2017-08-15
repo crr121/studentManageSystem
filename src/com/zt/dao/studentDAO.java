@@ -25,7 +25,7 @@ public class StudentDAO {
 		boolean flg =false;
 	    con = jdbc.getConnection();
 	    try {
-	    	String sql = "insert into student(id,name,age,sex,grade,tel,emai,addr) values(seq_student.nextval,?,?,?,?,?,?,?)";
+	    	String sql = "insert into student(id,name,age,sex,grade,tel,email,addr) values(seq_student.nextval,?,?,?,?,?,?,?)";
 	    	//这里的每一个问号都需要通过ps预处理来赋值
 	    	//赋的值需要外界通过一个student对象的参数传进来
 	    	//然后由ps添加进数据库
@@ -76,13 +76,17 @@ public class StudentDAO {
 			 ps = con.prepareStatement(sql);
 			 ps.setInt(1, id);
 			 //执行SQL语句
-			 int count = ps.executeUpdate();
-			 if(count>0){
-				 flg=true;
-			 }
+			  int count = ps.executeUpdate();
+			  if(count>0){
+				  flg=true;
+				  return flg;
+			  }
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			jdbc.closeAll(con, ps, rs);
 		}
 		return flg;
 	}
@@ -91,7 +95,7 @@ public class StudentDAO {
 	 * 查询所有学生
 	 * 返回一个结果集
 	 */
-	public List<Student> findAll(){
+	  public List<Student> findAll(){
 		//注意这里new的是array list，而不是list，list是一个接口，不能new
 		//arraylist 是一个对象
 		List<Student> stus = new ArrayList<Student>();
@@ -133,9 +137,53 @@ public class StudentDAO {
 		}
 		return stus;
 	}
+	  /**
+	   * 根据id查询
+	   * 传入一个参数id
+	   */
 	
-	
-	
+	/**
+	 * 修改学生
+	 * 修改函数返回一个Boolean值
+	 * 同时还需要传入一个student对象进去
+	 * 需要将修改的学生信息作为一个student对象传入进来
+	 * 需要传入学生的id，以及修改的字段名
+	 */
+	  public boolean updateStudent(){
+		  boolean flg = false;
+		  Student stu = null;
+		  //获取连接
+		  con = jdbc.getConnection();
+		  //准备SQL语句
+		  String sql = "update student set name =?,age =?,sex =?,grade =?,tel =?,email =?,addr =? where id =?";
+		  //修改的时候id不能修改，需要根据id来修改
+		  //预处理
+		  try {
+			ps = con.prepareStatement(sql);
+			//设置参数的值
+			//设置参数的时候根据问号的个数来设置
+			//同时index也是根据问号的序列号来设置
+			//这里一定要一一对应
+			  ps.setString(1, stu.getName());
+			  ps.setInt(2, stu.getAge());
+			  ps.setString(3, stu.getSex());
+			  ps.setString(4, stu.getGrade());
+			  ps.setString(5, stu.getTel());
+			  ps.setString(6, stu.getEmail());
+			  ps.setString(7, stu.getAddr());
+			  ps.setInt(8, stu.getId());
+			 //预处理完了开始执行
+			  int count = ps.executeUpdate();
+			  if(count>0){
+				  flg=true;
+				  return flg;
+			  }
+		   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		   }
+		   return flg;
+	   }
 	
 	
 	
