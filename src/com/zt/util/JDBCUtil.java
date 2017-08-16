@@ -8,13 +8,13 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class JDBCUtil {
-	//用main函数来测试
+	/*//用main函数来测试
 	public static void main(String[] args) {
 		JDBCUtil jdbc = new JDBCUtil();
 	
 		Connection con = jdbc.getConnection();
 		System.out.println(con);
-	}
+	}*/
 	//打印结果：oracle.jdbc.driver.T4CConnection@3a0d2766
 
    //加载驱动

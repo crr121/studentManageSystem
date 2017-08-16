@@ -141,6 +141,37 @@ public class StudentDAO {
 	   * 根据id查询
 	   * 传入一个参数id
 	   */
+	  public Student findById(int id){
+		  Student stu = null;
+		  con = jdbc.getConnection();
+		  String sql = "select name,age,sex,grade,tel,email,addr from student where id =?";
+		  try {
+			ps = con.prepareStatement(sql);
+			//设置参数
+			  ps.setInt(1, id);
+			  //执行SQL语句
+			  rs = ps.executeQuery();
+			  //从结果中取数据
+			  //取数据的时候一定要判断结果集有没有数据
+			  if(rs.next()){
+				  String name = rs.getString("name");
+			      int age = rs.getInt("age");
+			      String sex = rs.getString("sex");
+			      String grade = rs.getString("grade");
+			      String tel = rs.getString("tel");
+			      String email = rs.getString("email");
+			      String addr = rs.getString("addr");
+			      stu  = new Student(id, name, age, sex, grade, tel, email, addr);
+			  }
+		     
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			jdbc.closeAll(con, ps, rs);
+		}
+		   return stu;
+	  }
 	
 	/**
 	 * 修改学生
@@ -149,9 +180,9 @@ public class StudentDAO {
 	 * 需要将修改的学生信息作为一个student对象传入进来
 	 * 需要传入学生的id，以及修改的字段名
 	 */
-	  public boolean updateStudent(){
+	  public boolean updateStudent(Student stu){
+		  //修改的时候传入的是一个student对象
 		  boolean flg = false;
-		  Student stu = null;
 		  //获取连接
 		  con = jdbc.getConnection();
 		  //准备SQL语句

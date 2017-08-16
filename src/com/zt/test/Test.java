@@ -28,9 +28,9 @@ public class Test {
 	@org.junit.Test
 	public void testDel(){
 		boolean flg = false;
-		flg = sd.delStudent(23);
+		Student stu = sd.findById(26);
+		flg = sd.delStudent(stu.getId());
 		System.out.println(flg);
-		
 	}
 	
 	/**
@@ -45,13 +45,30 @@ public class Test {
 		}
 	}
 	/**
+	 * 根据id查询数据
+	 */
+	//一定要记得测试的时候先引入test主方法
+	//导入junit.jar包
+	@org.junit.Test
+	public void testFindById(){
+		Student stu = sd.findById(24);
+		System.out.println(stu);
+	}
+	/**
 	 * 测试修改学生
+	 * 修改之前需要先通过findById拿到对应的student对象
 	 * 需要传入需要修改的学生的字段
 	 * 返回布尔值
 	 */
+	@org.junit.Test
 	public void testUpdate(){
 		//在修改之前先根据id查询
-		
+		Student stu = sd.findById(27);
+		System.out.println(stu);
+		stu.setName("王liu");
+		boolean flg = sd.updateStudent(stu);
+		System.out.println(flg);
+		System.out.println(stu);
 	}
 	
 }
