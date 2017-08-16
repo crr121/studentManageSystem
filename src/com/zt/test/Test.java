@@ -2,7 +2,9 @@ package com.zt.test;
 
 import java.util.List;
 
+import com.zt.dao.AdminDAO;
 import com.zt.dao.StudentDAO;
+import com.zt.entity.Admin;
 import com.zt.entity.Student;
 
 public class Test {
@@ -69,6 +71,16 @@ public class Test {
 		boolean flg = sd.updateStudent(stu);
 		System.out.println(flg);
 		System.out.println(stu);
+	}
+	/**
+	 * 根据用户名和密码查询管理员账号
+	 */
+	@org.junit.Test
+	public void testAdmin(){
+		AdminDAO ad = new AdminDAO();
+		Admin admin = new Admin(1, "admin", "234");
+	    Admin findByPN = ad.findByPN(admin);
+	    System.out.println(findByPN);
 	}
 	
 }
