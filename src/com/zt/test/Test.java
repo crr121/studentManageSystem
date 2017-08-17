@@ -78,7 +78,7 @@ public class Test {
 	@org.junit.Test
 	public void testAdmin(){
 		AdminDAO ad = new AdminDAO();
-		Admin admin = new Admin(1, "admin", "234");
+		Admin admin = new Admin(1, "123", "234");
 	    Admin findByPN = ad.findByPN(admin);
 	    System.out.println(findByPN);
 	}

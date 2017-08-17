@@ -25,3 +25,5 @@ addr varchar2(100)
 --创建学生表的索引
 create sequence seq_student;
 select * from student;
+select * from dept;
+select deptno,dname,loc from dept where dname='SALES' and loc='CHICAGO';
